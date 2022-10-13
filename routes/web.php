@@ -27,6 +27,13 @@ Route::group(['middleware' => ['auth', 'role:user']], function () {
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/dashboard', 'App\Http\Controllers\admin\DashboardController@index')->name('admin-dashboard');
+
+    Route::get('/admin/users', 'App\Http\Controllers\admin\UsersController@index')->name('admin-users');
+    Route::get('/admin/remove/user/{id}', 'App\Http\Controllers\admin\UsersController@remove')->name('admin-remove-user');
+
+    Route::get('/admin/vehicle-categories', 'App\Http\Controllers\admin\VehicleCategoryController@index')->name('admin-categories');
+    Route::post('/admin/add/category', 'App\Http\Controllers\admin\VehicleCategoryController@add')->name('admin-add-category');
+    Route::post('/admin/delete/category', 'App\Http\Controllers\admin\VehicleCategoryController@delete')->name('admin-delete-category');
 });
 
 require __DIR__.'/auth.php';

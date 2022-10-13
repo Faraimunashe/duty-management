@@ -7,7 +7,18 @@
             </a>
         </li>
         @if (Auth::user()->hasRole('admin'))
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('admin-categories') }}">
+                    <i class="bi bi-truck"></i>
+                    <span>Vehicle Categories</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('admin-users') }}">
+                    <i class="bi bi-people"></i>
+                    <span>Users</span>
+                </a>
+            </li>
         @elseif (Auth::user()->hasRole('user'))
 
         @endif
