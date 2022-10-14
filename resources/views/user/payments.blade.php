@@ -28,7 +28,7 @@
                 <div class="card recent-sales overflow-auto">
                     <div class="card-header">
                         Vehicle Details
-                        <button type="button" class="btn btn-success" style="float: right;">
+                        <button type="button" class="btn btn-success" style="float: right;" data-bs-toggle="modal" data-bs-target="#largeModal">
                             <i class="bi bi-plus"></i>
                             Add Vehicle
                         </button>
@@ -57,7 +57,10 @@
                                             @endphp
                                         </th>
                                         <td>
-                                            <a href="#" class="text-primary fw-bold">Sit unde debitis delectus repellendus</a>
+                                            @php
+                                                $vehicle = get_vehicle($item->id);
+                                            @endphp
+                                            <a href="#" class="text-primary fw-bold">{{ $vehicle->make.' - '.$vehicle->make }}</a>
                                         </td>
                                         <td>$79</td>
                                         <td class="fw-bold">41</td>
@@ -81,4 +84,70 @@
             </div><!-- End Left side columns -->
         </div>
     </section>
+    <div class="modal fade" id="largeModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form method="POST" action="#">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Vehicle Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Category: </label>
+                            <div class="col-sm-10">
+                                <select name="category_id" class="form-control" required>
+                                    <option selected disabled>Select Vehicle Category</option>
+                                    @foreach (get_vehicle_categories() as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Make: </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="make" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Model: </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="model" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Engine #: </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="engine_number" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Manufactured: </label>
+                            <div class="col-sm-10">
+                                <input type="date" name="date_manufactured" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Quantity: </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="quantity" class="form-control" value="1" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Price: </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="price" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><!-- End Large Modal-->
 </x-app-layout>
