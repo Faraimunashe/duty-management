@@ -8,6 +8,12 @@
         </li>
         @if (Auth::user()->hasRole('admin'))
             <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('admin-duty') }}">
+                    <i class="bi bi-credit-card"></i>
+                    <span>Duty Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('admin-categories') }}">
                     <i class="bi bi-truck"></i>
                     <span>Vehicle Categories</span>
@@ -20,7 +26,12 @@
                 </a>
             </li>
         @elseif (Auth::user()->hasRole('user'))
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('user-payments') }}">
+                    <i class="bi bi-coin"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
         @endif
 
         <li class="nav-item">

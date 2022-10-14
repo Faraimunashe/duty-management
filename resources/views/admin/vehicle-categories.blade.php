@@ -41,7 +41,7 @@
                                         <h5 class="card-title">Vehicle Categories</h5>
                                     </div>
                                     <div class="col-md-2 mt-3 justify-end">
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">Add New</button>
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#largeModal">Add New</button>
                                     </div>
                                 </div>
                                 <table class="table table-borderless datatable">
@@ -68,6 +68,7 @@
                                                 </th>
                                                 <td>{{ $category->name }}</td>
                                                 <td>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $category->id }}">Change</button>
                                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#smallModal{{ $category->id }}">Remove</button>
                                                 </td>
                                             </tr>
@@ -91,7 +92,33 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div><!-- End Small Modal-->
+                                            </div><!-- End Delete Modal-->
+                                            <div class="modal fade" id="editModal{{ $category->id }}" tabindex="-1">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <form method="POST" action="{{ route('admin-edit-category') }}">
+                                                            @csrf
+                                                            <input type="hidden" name="category_id" value="{{ $category->id }}" required>
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Edit Category</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row mb-3">
+                                                                    <label for="inputText" class="col-sm-2 col-form-label">Category: </label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" name="name" class="form-control" value="{{ $category->name }}" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div><!-- End Edit Modal-->
                                         @endforeach
                                     </tbody>
                                 </table>

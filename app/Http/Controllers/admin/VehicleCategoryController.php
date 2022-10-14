@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Vehicle;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -43,9 +44,12 @@ class VehicleCategoryController extends Controller
         ]);
 
         try{
-            Category::find($request->category_id)->update([
-                'name' => $request->name
-            ]);
+            $category = Category::find($request->category_id);
+
+            $category->name = $request->name;
+            $category->save();
+
+            return redirect()->back()->with('success', 'successfully updated category');
         }catch(Exception $e){
             return redirect()->back()->with('error', 'Error'.$e->getMessage());
         }
@@ -57,6 +61,11 @@ class VehicleCategoryController extends Controller
         $request->validate([
             'category_id' => ['required', 'numeric']
         ]);
+
+        $cat_in_veh = Vehicle::where('category_id', $request->category_id)->first();
+        if(!is_null($cat_in_veh)){
+            return redirect()->back()->with('error', 'You cannot delete this category at the moment');
+        }
 
         try{
             Category::find($request->category_id)->delete();

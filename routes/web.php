@@ -23,6 +23,8 @@ Route::post('/change-password', 'App\Http\Controllers\ProfileController@change')
 
 Route::group(['middleware' => ['auth', 'role:user']], function () {
     Route::get('/user/dashboard', 'App\Http\Controllers\user\DashboardController@index')->name('user-dashboard');
+
+    Route::get('/user/payments', 'App\Http\Controllers\user\PaymentsController@index')->name('user-payments');
 });
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -34,6 +36,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/vehicle-categories', 'App\Http\Controllers\admin\VehicleCategoryController@index')->name('admin-categories');
     Route::post('/admin/add/category', 'App\Http\Controllers\admin\VehicleCategoryController@add')->name('admin-add-category');
     Route::post('/admin/delete/category', 'App\Http\Controllers\admin\VehicleCategoryController@delete')->name('admin-delete-category');
+    Route::post('/admin/edit/category', 'App\Http\Controllers\admin\VehicleCategoryController@edit')->name('admin-edit-category');
+
+    Route::get('/admin/duty-payments', 'App\Http\Controllers\admin\DutyController@index')->name('admin-duty');
+    Route::post('/admin/download/duty', 'App\Http\Controllers\admin\DutyController@download')->name('admin-download-duty');
 });
 
 require __DIR__.'/auth.php';
