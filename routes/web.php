@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth', 'role:user']], function () {
     Route::get('/user/dashboard', 'App\Http\Controllers\user\DashboardController@index')->name('user-dashboard');
 
     Route::get('/user/payments', 'App\Http\Controllers\user\PaymentsController@index')->name('user-payments');
+    Route::post('/user/add/vehicle', 'App\Http\Controllers\user\PaymentsController@add_vehicle')->name('user-add-vehicle');
+    Route::post('/user/make/payment', 'App\Http\Controllers\user\PaymentsController@make_payment')->name('user-make-payment');
 });
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -40,6 +42,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/admin/duty-payments', 'App\Http\Controllers\admin\DutyController@index')->name('admin-duty');
     Route::post('/admin/download/duty', 'App\Http\Controllers\admin\DutyController@download')->name('admin-download-duty');
+
+    Route::post('/admin/update/rate', 'App\Http\Controllers\admin\DutyController@update_rate')->name('admin-update-rate');
 });
 
 require __DIR__.'/auth.php';

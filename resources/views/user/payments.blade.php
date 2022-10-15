@@ -23,6 +23,15 @@
                         {{ Session::get('error') }}
                     </div>
                 @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
             <div class="col-md-9">
                 <div class="card recent-sales overflow-auto">
@@ -47,6 +56,7 @@
                             <tbody>
                                 @php
                                     $count = 0;
+                                    $total_duty = 0.00;
                                 @endphp
                                 @foreach ($cart as $item)
                                     <tr>
@@ -60,11 +70,14 @@
                                             @php
                                                 $vehicle = get_vehicle($item->id);
                                             @endphp
-                                            <a href="#" class="text-primary fw-bold">{{ $vehicle->make.' - '.$vehicle->make }}</a>
+                                            <a href="#" class="text-primary fw-bold">{{ $vehicle->make.' - '.$vehicle->make }} X {{ $item->qty }}</a>
                                         </td>
-                                        <td>$79</td>
-                                        <td class="fw-bold">41</td>
-                                        <td>$3,239</td>
+                                        <td>${{ $item->price }}</td>
+                                        <td class="fw-bold">{{ $item->rate }}</td>
+                                        <td>${{ calculate_duty($item->price, $item->rate) }}</td>
+                                        @php
+                                            $total_duty = $total_duty + calculate_duty($item->price, $item->rate);
+                                        @endphp
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -78,7 +91,19 @@
                         Payment Details
                     </div>
                     <div class="card-body">
-
+                        <form method="POST" action="{{ route('user-make-payment') }}">
+                            @csrf
+                            <div class="d-grid gap-2 mt-3">
+                                <h3><strong> Total Duty: </strong></h3>
+                                <h3>${{ money($total_duty) }}</h3>
+                            </div>
+                            <div class="d-grid gap-2 mt-3">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="bi bi-credit-card"></i>
+                                    Paynow
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div><!-- End Left side columns -->
@@ -87,7 +112,7 @@
     <div class="modal fade" id="largeModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form method="POST" action="#">
+                <form method="POST" action="{{ route('user-add-vehicle') }}">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">Add Vehicle Details</h5>
