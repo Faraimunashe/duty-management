@@ -51,24 +51,27 @@
                                         <tr>
                                             <th scope="col">Reference</th>
                                             <th scope="col">Vehicle</th>
-                                            <th scope="col">Buying</th>
                                             <th scope="col">Rate</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">Clerk</th>
+                                            <th scope="col">Cashier</th>
                                             <th scope="col">Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($duties as $duty)
                                             <tr>
-                                                <td>{{ $duty->reference }}</td>
-                                                <td>{{ $duty->vehicle_id }}</td>
-                                                <td>{{ $duty->amount }}</td>
+                                                <td>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#dutyModal{{$duty->id}}">
+                                                        {{ $duty->reference }}
+                                                    </a>
+                                                </td>
+                                                <td>{{ count_vehicle($duty->id) }}</td>
                                                 <td>{{ $duty->percentage_rate }}</td>
                                                 <td>{{ $duty->total }}</td>
-                                                <td>{{ $duty->user_id }}</td>
+                                                <td>{{ get_user($duty->user_id) }}</td>
                                                 <td>{{ $duty->created_at }}</td>
                                             </tr>
+
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -111,4 +114,63 @@
             </div>
         </div>
     </div><!-- End Large Modal-->
+    @foreach ( $duties as $duty )
+        <div class="modal fade" id="dutyModal{{$duty->id}}" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="POST" action="{{route('admin-download-invoice')}}">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title">Duty #{{$duty->reference}} Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Vehicle</th>
+                                        <th scope="col">Unity</th>
+                                        <th scope="col">Qty</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $count = 0;
+                                        @endphp
+                                        @foreach (get_duty_items($duty->id) as $item)
+                                            <tr>
+                                                <th scope="row">
+                                                    @php
+                                                        $count++;
+                                                        echo $count;
+                                                    @endphp
+                                                </th>
+                                                <td>
+                                                    @php
+                                                        $vehicle = get_vehicle($item->vehicle_id);
+                                                    @endphp
+                                                    <a href="#" class="text-primary fw-bold">{{ $vehicle->make.' - '.$vehicle->model }}</a>
+                                                </td>
+                                                <td>${{ $vehicle->price }}</td>
+                                                <td class="fw-bold">{{ $item->qty}}</td>
+                                                <td>${{ $item->total_price }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-download"></i>
+                                Download PDF
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- End Large Modal-->
+    @endforeach
 </x-app-layout>

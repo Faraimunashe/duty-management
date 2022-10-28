@@ -20,7 +20,7 @@
                 <x-input-label for="name" :value="__('Name')" />
                 <div class="input-group">
                     <div class="col-md-12">
-                        <input id="name" class="form-control" type="text" name="name" :value="old('name')" required />
+                        <input id="name" class="form-control" type="text" name="name" :value="old('name')"/>
                     </div>
                     <div class="col-md-12">
                         <code>
@@ -35,7 +35,7 @@
                 <x-input-label for="email" :value="__('Email')" />
                 <div class="input-group">
                     <div class="col-md-12">
-                        <input id="email" class="form-control" type="email" name="email" :value="old('email')" required />
+                        <input id="email" class="form-control" type="email" name="email" :value="old('email')"/>
                     </div>
                     <div class="col-md-12">
                         <code>
@@ -60,7 +60,7 @@
                 <x-input-label for="password" :value="__('Password')" />
                 <div class="input-group">
                     <div class="col-md-12">
-                        <input id="password" class="form-control" type="password" name="password" required autocomplete="new-password" />
+                        <input id="password" class="form-control" type="password" name="password" autocomplete="new-password" />
                     </div>
                     <div class="col-md-12">
                         <code>
@@ -84,7 +84,7 @@
                 <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
                 <div class="input-group">
                     <div class="col-md-12">
-                        <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required />
+                        <input id="password_confirmation" class="form-control" type="password" name="password_confirmation"/>
                     </div>
                     <div class="col-md-12">
                         <code>

@@ -37,7 +37,7 @@
                 <div class="row">
 
                     <!-- Duty Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-xxl-4 col-md-4">
                         <div class="card info-card sales-card">
                             <div class="card-body">
                                 <h5 class="card-title">Duty <span>| payments</span></h5>
@@ -56,7 +56,7 @@
                     </div><!-- End Duty Card -->
 
                     <!-- Rate Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-xxl-4 col-md-4">
                         <div class="card info-card revenue-card">
                             <div class="card-body">
                             <h5 class="card-title">Rate <span>| percentage</span></h5>
@@ -76,7 +76,7 @@
                     </div><!-- End Rate Card -->
 
                     <!-- Users Card -->
-                    <div class="col-xxl-4 col-xl-12">
+                    <div class="col-xxl-4 col-md-4">
                         <div class="card info-card customers-card">
                             <div class="card-body">
                                 <h5 class="card-title">Users <span>| Combined</span></h5>
@@ -99,7 +99,7 @@
                         </div>
                     </div><!-- End Users Card -->
 
-                    <!-- Reports -->
+                    {{-- <!-- Reports -->
                     <div class="col-12">
                         <div class="card">
 
@@ -327,7 +327,7 @@
                             </div>
 
                         </div>
-                    </div><!-- End Top Selling -->
+                    </div><!-- End Top Selling --> --}}
 
                 </div>
             </div><!-- End Left side columns -->

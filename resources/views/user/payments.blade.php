@@ -41,6 +41,10 @@
                             <i class="bi bi-plus"></i>
                             Add Vehicle
                         </button>
+                        <button type="button" class="btn btn-danger" style="float: right;" data-bs-toggle="modal" data-bs-target="#removeModal">
+                            <i class="bi bi-trash"></i>
+                            Clear
+                        </button>
                     </div>
                     <div class="card-body">
                         <table class="table table-borderless">
@@ -91,17 +95,20 @@
                         Payment Details
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('user-make-payment') }}">
+                        <form method="POST" action="#">
                             @csrf
                             <div class="d-grid gap-2 mt-3">
                                 <h3><strong> Total Duty: </strong></h3>
                                 <h3>${{ money($total_duty) }}</h3>
+                                <input type="hidden" name="total" value="{{ money($total_duty) }}" required>
                             </div>
                             <div class="d-grid gap-2 mt-3">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="bi bi-credit-card"></i>
-                                    Paynow
-                                </button>
+                                @if ($total_duty > 0)
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                                        <i class="bi bi-credit-card"></i>
+                                        Paynow
+                                    </button>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -170,6 +177,53 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><!-- End Large Modal-->
+    <div class="modal fade" id="removeModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form method="POST" action="{{ route('user-clear-cart') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">Clear Cart</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to clear cart?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Yes clear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><!-- End Delete Modal-->
+
+    <div class="modal fade" id="paymentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form method="POST" action="{{ route('user-make-payment') }}">
+                    @csrf
+                    <input type="hidden" name="total" value="{{ money($total_duty) }}" required>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Start Payment of ${{ money($total_duty) }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Phone: </label>
+                            <div class="col-sm-10">
+                                <input type="tel" name="phone" class="form-control" placeholder="e.g. 078350959" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Start payment</button>
                     </div>
                 </form>
             </div>

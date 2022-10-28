@@ -34,8 +34,15 @@ class DutyController extends Controller
         {
             return redirect()->back()->with('error', 'No data matching your parameters');
         }
-        $pdf = Pdf::loadView('pdf.duty', $data->toArray());
+        $pdf = Pdf::loadView('pdf.duty', ['data'=>$data]);
         return $pdf->download('duty_report_'.now().'.pdf');
+    }
+
+    public function invoice(Request $request)
+    {
+        $data = Duty::all();
+        $pdf = Pdf::loadView('pdf.invoice', ['data'=>$data]);
+        return $pdf->download('invoice_'.now().'.pdf');
     }
 
     public function update_rate(Request $request)

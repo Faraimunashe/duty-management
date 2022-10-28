@@ -1,12 +1,12 @@
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
-        <li class="nav-item">
-            <a class="nav-link " href="{{ route('dashboard') }}">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
         @if (Auth::user()->hasRole('admin'))
+            <li class="nav-item">
+                <a class="nav-link " href="{{ route('dashboard') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('admin-duty') }}">
                     <i class="bi bi-credit-card"></i>
@@ -20,6 +20,18 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('admin-vehicles') }}">
+                    <i class="bi bi-truck"></i>
+                    <span>Imported Vehicles</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('admin-revenue') }}">
+                    <i class="bi bi-truck"></i>
+                    <span>Revenue</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('admin-users') }}">
                     <i class="bi bi-people"></i>
                     <span>Users</span>
@@ -30,6 +42,12 @@
                 <a class="nav-link collapsed" href="{{ route('user-payments') }}">
                     <i class="bi bi-coin"></i>
                     <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('user-transactions') }}">
+                    <i class="bi bi-coin"></i>
+                    <span>Transactions</span>
                 </a>
             </li>
         @endif

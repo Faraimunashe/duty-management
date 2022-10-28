@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('duties', function (Blueprint $table) {
+        Schema::create('duty_items', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('reference');
-            $table->decimal('percentage_rate');//percentage
-            $table->decimal('total');
+            $table->bigInteger('duty_id');
+            $table->bigInteger('vehicle_id');
+            $table->integer('qty');
+            $table->decimal('unit_price');
+            $table->decimal('total_price');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('duties');
+        Schema::dropIfExists('duty_items');
     }
 };
